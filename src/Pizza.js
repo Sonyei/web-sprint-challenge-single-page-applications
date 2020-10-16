@@ -5,7 +5,6 @@ import React from 'react'
 export default function Form(props) {
 
 const { values, disabled, change, submit, errors } = props
-const { cheese, pepp, olive, tomat } = props.values
 
 
 const onChange = (evt) => {
@@ -58,7 +57,7 @@ return (
             <input
             name='cheese'
             type='checkbox'
-            checked={cheese}
+            checked={values.cheese}
             onChange={onChange}
             />Cheese
        </label>
@@ -68,7 +67,7 @@ return (
             <input
             name='pepp'
             type='checkbox'
-            checked={pepp}
+            checked={values.pepp}
             onChange={onChange}
             />Pepperoni
        </label>
@@ -78,7 +77,7 @@ return (
             <input
             name='olive'
             type='checkbox'
-            checked={olive}
+            checked={values.olive}
             onChange={onChange}
             />Olives
        </label>
@@ -88,12 +87,21 @@ return (
             <input
             name='tomat'
             type='checkbox'
-            checked={tomat}
+            checked={values.tomat}
             onChange={onChange}
             />Tomatoes
        </label>
        <br />
        </div>
+
+       <label> Special Instructions
+       <input
+       name='specInstrct'
+       type='text'
+       value={values.specInstruct}
+       onChange={onChange}
+       />
+       </label>
 
        <button disabled={disabled}>Place order</button>
 

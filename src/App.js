@@ -2,59 +2,45 @@ import React, { useState, useEffect } from "react";
 import { Route, Link } from 'react-router-dom'
 import Form from './Pizza'
 import Home from './Home'
+import Orders from './PizzaOrders'
 import schema from './schema'
 import * as yup from 'yup'
-import axios from 'axios'
 
 
 const initialFormValues = {
   name: '',
   size: '',
-  toppings: {
     cheese: false,
     pepp: false,
     olive: false,
-    tomat: false
+    tomat: false,
+  specInstruct: '',
   }
-}
 
 const initialFormErrors = {
   name: '',
   size: '',
+  specInstruct: '',
 }
-
+const initialPizza = []
 const initialDisabled = true;
-const fakeAPI = 'https://reqres.in/api/users'
 
 const App = () => {
 
-const [pizzas, setPizzas] = useState([])
+const [pizzas, setPizzas] = useState(initialPizza)
 const [formValues, setFormValues] = useState(initialFormValues)
 const [formErrors, setFormErrors] = useState(initialFormErrors)
 const [disabled, setDisabled] = useState(initialDisabled)
 
-const formSubmit = () => {
-  const newPizza = {
-    name: formValues.name.trim(),
-    size: formValues.size,
-    toppings: ['cheese', 'pepp', 'olive', 'tomat'].filter(
-      (topping) => formValues[topping]
-    ),
-  }
-  postNewPizza(newPizza)
+const changePizza = (name, value) => {
+  setFormValues({
+    ...formValues, [name]: value
+  })
 }
 
-const postNewPizza = (newPizza) => {
-  axios.post(fakeAPI, newPizza)
-    .then(res => {
-      setPizzas([res.data, ...pizzas])
-    })
-    .catch(err => {
-      console.log('POST ERR -->', err)
-    })
-    .finally(() => {
-      setFormValues(initialFormValues)
-    })
+const submitPizza = () => {
+  setPizzas([...pizzas, formValues])
+  setFormValues(initialFormValues)
 }
 
 const inputChange = (name, value) => {
@@ -103,12 +89,17 @@ useEffect(() => {
       <Route path='/pizza/'>
         <Form
         values={formValues}
-        change={inputChange}
-        submit={formSubmit}
+        change={changePizza}
+        submit={submitPizza}
+        inputChange={inputChange}
         disabled={disabled}
         errors={formErrors}
         />
-      </Route>
+      
+        {pizzas.map((order) => (
+        <Orders ingredients={order} key={order.name} />
+        ))}
+        </Route>
 
        </div>
     </>
