@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Link } from 'react-router-dom'
 import Form from './Pizza'
 import Home from './Home'
@@ -64,7 +64,13 @@ yup
     ...formValues,
     [name]: value,
   })
-}
+};
+
+useEffect(() => {
+  schema.isValid(formValues).then((valid) => {
+    setDisabled(!valid);
+  })
+}, [formValues]);
 
   return (
     <>
