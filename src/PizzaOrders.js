@@ -1,13 +1,13 @@
 import React from 'react'
 
 export default function Orders(props) {
-    const { values, ingredients } = props
+    const { ingredients } = props
 
 
     return (
-        <Orders>
-        <h3>Name: {values.name}</h3>
-        <p>Size: {values.size}</p>
+        <div>
+        <h3>Name: {ingredients.name}</h3>
+        <p>Size: {ingredients.size}</p>
         <div>
         <h3>Toppings:</h3>
         <p>Cheese: {ingredients.cheese ? 'yes' : 'no'}</p>
@@ -15,10 +15,10 @@ export default function Orders(props) {
         <p>Olives: {ingredients.olive ? 'yes' : 'no'}</p>
         <p>Tomatoes: {ingredients.tomat ? 'yes' : 'no'}</p>
         <br />
+        <h3>Special Instructions</h3>
+        {ingredients.specInstruct === '' ? '' : ingredients.specInstruct}
 
-        {values.specInstruct === '' ? '' : values.specInstruct}
-
+            </div>
         </div>
-        </Orders>
     )
 }

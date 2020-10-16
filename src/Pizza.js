@@ -96,7 +96,7 @@ return (
 
        <label> Special Instructions
        <input
-       name='specInstrct'
+       name='specInstruct'
        type='text'
        value={values.specInstruct}
        onChange={onChange}

@@ -14,7 +14,9 @@ size: yup
 cheese: yup.boolean(),
 pepp: yup.boolean(),
 olive: yup.boolean(),
-tomat: yup.boolean()
+tomat: yup.boolean(),
 
+specInstruct: yup
+    .string(),
 
 })
