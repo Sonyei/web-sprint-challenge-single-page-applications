@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Route, Link } from 'react-router-dom'
 import Form from './Pizza'
 import Home from './Home'
+import schema from './schema'
+import * as yup from 'yup'
 
 
 const initialFormValues = {
@@ -41,8 +43,27 @@ const formSubmit = () => {
   }
 }
 
-const inputChange = () => {
-  
+const inputChange = (name, value) => {
+
+yup
+.reach(schema, name)
+.validate(value)
+.then(() => {
+  setFormErrors({
+    ...formErrors,
+    [name]: '',
+  })
+})
+.catch(err => {
+  setFormErrors({
+    ...formErrors,
+    [name]: err.errors[0]
+  })
+})
+  setFormValues({
+    ...formValues,
+    [name]: value,
+  })
 }
 
   return (
