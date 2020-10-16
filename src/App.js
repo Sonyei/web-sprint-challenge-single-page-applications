@@ -4,6 +4,7 @@ import Form from './Pizza'
 import Home from './Home'
 import schema from './schema'
 import * as yup from 'yup'
+import axios from 'axios'
 
 
 const initialFormValues = {
@@ -22,13 +23,12 @@ const initialFormErrors = {
   size: '',
 }
 
-const initialPizzas = []
 const initialDisabled = true;
-
+const fakeAPI = 'https://reqres.in/api/users'
 
 const App = () => {
 
-const [pizzas, setPizzas] = useState(initialPizzas)
+const [pizzas, setPizzas] = useState([])
 const [formValues, setFormValues] = useState(initialFormValues)
 const [formErrors, setFormErrors] = useState(initialFormErrors)
 const [disabled, setDisabled] = useState(initialDisabled)
@@ -41,6 +41,20 @@ const formSubmit = () => {
       (topping) => formValues[topping]
     ),
   }
+  postNewPizza(newPizza)
+}
+
+const postNewPizza = (newPizza) => {
+  axios.post(fakeAPI, newPizza)
+    .then(res => {
+      setPizzas([res.data, ...pizzas])
+    })
+    .catch(err => {
+      console.log('POST ERR -->', err)
+    })
+    .finally(() => {
+      setFormValues(initialFormValues)
+    })
 }
 
 const inputChange = (name, value) => {
